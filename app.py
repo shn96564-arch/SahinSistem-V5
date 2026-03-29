@@ -32,8 +32,8 @@ try:
 
     genai.configure(api_key=key)
     
-    # En yeni ve hızlı model: gemini-1.5-flash
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    # Eski hatalı satırı sil, yerine bunu yapıştır:
+      model = genai.GenerativeModel('gemini-1.5-flash-latest')
     
     talimat = (
         "Sen Şahin Sistem'sin. Yusuf Efe Şahin seni 7/D sınıfı için özel olarak kodladı. "
