@@ -1,9 +1,8 @@
 import streamlit as st
 import google.generativeai as genai
 
-# --- 🦅 ŞAHİN SİSTEM v6.0 (TAM OTOMATİK) ---
+# --- 🎨 SİBER TASARIM (SİYAH & ALTIN) ---
 st.set_page_config(page_title="Şahin Sistem v6.0", layout="wide")
-
 st.markdown("""
     <style>
     .main { background-color: #000; color: #fff; }
@@ -13,6 +12,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+# --- 🦅 ÜST PANEL ---
 st.markdown("""
     <div class="header-box">
         <h1 style="color: white; margin:0;">🦅 ŞAHİN SİSTEM v6.0</h1>
@@ -21,24 +21,38 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# --- 🧠 SİSTEM MOTORU ---
+# --- 🧠 SİSTEM MOTORU (AKILLI KONTROL) ---
 try:
-    # Secrets'tan anahtarı çekiyoruz
-    api_key = st.secrets["GEMINI_API_KEY"]
-    genai.configure(api_key=api_key)
+    # Hem GEMINI_API_KEY hem api_key ismini kontrol ediyoruz
+    if "GEMINI_API_KEY" in st.secrets:
+        key = st.secrets["GEMINI_API_KEY"]
+    elif "api_key" in st.secrets:
+        key = st.secrets["api_key"]
+    else:
+        st.error("⚠️ Secrets kısmına GEMINI_API_KEY eklenmemiş!")
+        st.stop()
+
+    genai.configure(api_key=key)
     
-    talimat = "Sen Şahin Sistem'sin. Yusuf Efe Şahin seni kodladı. 7. sınıf Türkçe, Matematik ve Sosyal uzmanısın."
+    talimat = "Sen Şahin Sistem'sin. Yusuf Efe Şahin seni kodladı. 7. sınıf derslerinde (Türkçe, Mat, Sosyal) uzmansın."
     model = genai.GenerativeModel('gemini-pro')
 
-    st.markdown("<h3 style='color:#d4af37; text-align:center;'>💬 ANALİZ TERMİNALİ</h3>", unsafe_allow_html=True)
-    soru = st.text_input("", placeholder="Hemen sorunuzu yazın...")
+    # --- ⌨️ ANALİZ TERMİNALİ ---
+    st.markdown("<h3 style='color:#d4af37; text-align:center;'>💬 TÜM DERSLER ANALİZ TERMİNALİ</h3>", unsafe_allow_html=True)
+    soru = st.text_input("", placeholder="Hemen sorunuzu yazın (Örn: Rasyonel sayılar nedir?)...")
 
     if soru:
         with st.spinner("Şahin Sistem Analiz Ediyor..."):
             response = model.generate_content(f"{talimat}\nSoru: {soru}")
-            st.markdown(f"<div class='response-area'><b style='color:#00ff41;'>⚡ SONUÇ:</b><br><br>{response.text}</div>", unsafe_allow_html=True)
+            st.markdown(f"""
+                <div class="response-area">
+                    <b style="color:#00ff41;">⚡ ANALİZ SONUCU:</b><br><br>
+                    {response.text}
+                </div>
+            """, unsafe_allow_html=True)
 
 except Exception as e:
-    st.error("⚠️ SİSTEM MOTORU BEKLENİYOR (Secrets Ayarını Kontrol Et!)")
+    st.error(f"⚠️ MOTOR HATASI: {e}")
 
-st.markdown(f"<div style='text-align:center; color:#ff00ff; font-size:45px; font-weight:bold; text-shadow:0 0 20px #ff00ff; margin-top:100px;'>yusufefeşahin7d</div>", unsafe_allow_html=True)
+# --- 🌟 NEON İMZA ---
+st.markdown(f"<div style='text-align:center; color:#ff00ff; font-size:45px; font-weight:bold; text-shadow:0-0-20px #ff00ff; margin-top:100px;'>yusufefeşahin7d</div>", unsafe_allow_html=True)
